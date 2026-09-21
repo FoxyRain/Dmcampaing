@@ -36,7 +36,7 @@ function openCampaign(index) {
     const campaigns = JSON.parse(localStorage.getItem('campaigns') || '[]');
     const campaign = campaigns[index];
     window.location.href = `editor.html?id=${campaign.id}`;
-}
+} 
 
 // Инициализация
 document.getElementById('newCampaignBtn').onclick = createNewCampaign;

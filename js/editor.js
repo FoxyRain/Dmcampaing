@@ -176,3 +176,8 @@ document.getElementById('backBtn').onclick = () => {
 
 // Загружаем кампанию при старте
 loadCampaign();
+// Кнопка чтения
+   document.getElementById('readBtn').onclick = () => {
+       saveCampaign(); // Сначала сохраняем, чтобы не потерять текст
+       window.location.href = `reader.html?id=${campaignId}`;
+   };

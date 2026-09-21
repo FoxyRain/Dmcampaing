@@ -1,3 +1,33 @@
+// Получаем ID кампании из URL
+const urlParams = new URLSearchParams(window.location.search);
+const campaignId = urlParams.get('id');
+
+// Загружаем кампанию
+let campaign = null;
+let currentSceneIndex = -1;
+
+function loadCampaign() {
+    const campaigns = JSON.parse(localStorage.getItem('campaigns') || '[]');
+    campaign = campaigns.find(c => c.id === campaignId);
+    
+    if (!campaign) {
+        alert('Кампания не найдена!');
+        window.location.href = 'index.html';
+        return;
+    }
+    
+    document.getElementById('campaignTitle').textContent = campaign.title;
+    
+    // Инициализируем структуры если их нет
+    if (!campaign.chapters) campaign.chapters = [];
+    if (!campaign.npcs) campaign.npcs = [];
+    if (!campaign.locations) campaign.locations = [];
+    
+    renderChapters();
+    renderNpcs();
+    renderLocations();
+}
+
 // Инициализация Quill редактора
 const quill = new Quill('#editor', {
     theme: 'snow',
@@ -5,7 +35,7 @@ const quill = new Quill('#editor', {
     modules: {
         toolbar: [
             [{ 'header': [1, 2, 3, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
+            ['bold', 'italic', 'underline'],
             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
             ['link', 'image'],
             ['clean']
@@ -13,91 +43,74 @@ const quill = new Quill('#editor', {
     }
 });
 
-// Получаем ID кампании из URL
-const urlParams = new URLSearchParams(window.location.search);
-const campaignId = urlParams.get('id');
-
-// Загружаем кампанию
-let currentCampaign = null;
-let currentScene = null;
-
-function loadCampaign() {
-    const campaigns = JSON.parse(localStorage.getItem('campaigns') || '[]');
-    currentCampaign = campaigns.find(c => c.id === campaignId);
-    
-    if (!currentCampaign) {
-        alert('Кампания не найдена');
-        window.location.href = 'index.html';
-        return;
-    }
-    
-    document.getElementById('campaignTitle').textContent = currentCampaign.title;
-    renderChapters();
-    renderEntities();
-}
-
 // Отрисовка глав
 function renderChapters() {
-    const chapterList = document.getElementById('chapterList');
-    chapterList.innerHTML = '';
+    const list = document.getElementById('chapterList');
+    list.innerHTML = '';
     
-    if (!currentCampaign.chapters) {
-        currentCampaign.chapters = [];
-    }
-    
-    currentCampaign.chapters.forEach((chapter, index) => {
+    campaign.chapters.forEach((chapter, index) => {
         const li = document.createElement('li');
         li.textContent = chapter.title;
-        li.onclick = () => selectChapter(index);
-        chapterList.appendChild(li);
+        if (index === currentSceneIndex) li.classList.add('active');
+        li.onclick = () => selectScene(index);
+        list.appendChild(li);
     });
 }
 
-// Отрисовка сущностей
-function renderEntities() {
-    const entityList = document.getElementById('entityList');
-    entityList.innerHTML = '';
+// Отрисовка NPC
+function renderNpcs() {
+    const list = document.getElementById('npcList');
+    list.innerHTML = '';
     
-    if (!currentCampaign.entities) {
-        currentCampaign.entities = { npcs: [], locations: [], items: [] };
-    }
-    
-    // NPC
-    currentCampaign.entities.npcs.forEach(npc => {
+    campaign.npcs.forEach(npc => {
         const li = document.createElement('li');
-        li.textContent = '👤 ' + npc.name;
-        li.onclick = () => selectEntity('npc', npc.id);
-        entityList.appendChild(li);
-    });
-    
-    // Локации
-    currentCampaign.entities.locations.forEach(loc => {
-        const li = document.createElement('li');
-        li.textContent = '🗺️ ' + loc.name;
-        li.onclick = () => selectEntity('location', loc.id);
-        entityList.appendChild(li);
+        li.textContent = npc.name;
+        li.onclick = () => alert(`${npc.name}\n\n${npc.description}`);
+        list.appendChild(li);
     });
 }
 
-// Выбор главы
-function selectChapter(index) {
-    const chapter = currentCampaign.chapters[index];
-    if (chapter.scenes && chapter.scenes.length > 0) {
-        selectScene(chapter.scenes[0]);
-    }
+// Отрисовка локаций
+function renderLocations() {
+    const list = document.getElementById('locationList');
+    list.innerHTML = '';
+    
+    campaign.locations.forEach(loc => {
+        const li = document.createElement('li');
+        li.textContent = loc.name;
+        li.onclick = () => alert(`${loc.name}\n\n${loc.description}`);
+        list.appendChild(li);
+    });
 }
 
 // Выбор сцены
-function selectScene(scene) {
-    currentScene = scene;
-    document.getElementById('sceneTitle').value = scene.title;
+function selectScene(index) {
+    // Сохраняем текущую сцену перед переключением
+    if (currentSceneIndex >= 0 && campaign.chapters[currentSceneIndex]) {
+        campaign.chapters[currentSceneIndex].content = quill.root.innerHTML;
+        campaign.chapters[currentSceneIndex].title = document.getElementById('sceneTitle').value;
+    }
+    
+    currentSceneIndex = index;
+    const scene = campaign.chapters[index];
+    
+    document.getElementById('sceneTitle').value = scene.title || '';
     quill.root.innerHTML = scene.content || '';
+    
+    renderChapters();
 }
 
-// Выбор сущности
-function selectEntity(type, id) {
-    const entity = currentCampaign.entities[type + 's'].find(e => e.id === id);
-    alert(`${entity.name}\n\n${entity.description}`);
+// Сохранение кампании
+function saveCampaign() {
+    if (currentSceneIndex >= 0 && campaign.chapters[currentSceneIndex]) {
+        campaign.chapters[currentSceneIndex].content = quill.root.innerHTML;
+        campaign.chapters[currentSceneIndex].title = document.getElementById('sceneTitle').value;
+    }
+    
+    const campaigns = JSON.parse(localStorage.getItem('campaigns') || '[]');
+    const index = campaigns.findIndex(c => c.id === campaignId);
+    campaigns[index] = campaign;
+    localStorage.setItem('campaigns', JSON.stringify(campaigns));
 }
 
 // Добавление главы
@@ -105,10 +118,10 @@ document.getElementById('addChapterBtn').onclick = () => {
     const title = prompt('Название главы:');
     if (!title) return;
     
-    currentCampaign.chapters.push({
-        id: 'chapter_' + Date.now(),
+    campaign.chapters.push({
+        id: 'ch_' + Date.now(),
         title: title,
-        scenes: []
+        content: ''
     });
     
     saveCampaign();
@@ -122,14 +135,14 @@ document.getElementById('addNpcBtn').onclick = () => {
     
     const description = prompt('Описание NPC:') || '';
     
-    currentCampaign.entities.npcs.push({
+    campaign.npcs.push({
         id: 'npc_' + Date.now(),
         name: name,
         description: description
     });
     
     saveCampaign();
-    renderEntities();
+    renderNpcs();
 };
 
 // Добавление локации
@@ -139,34 +152,20 @@ document.getElementById('addLocationBtn').onclick = () => {
     
     const description = prompt('Описание локации:') || '';
     
-    currentCampaign.entities.locations.push({
+    campaign.locations.push({
         id: 'loc_' + Date.now(),
         name: name,
         description: description
     });
     
     saveCampaign();
-    renderEntities();
+    renderLocations();
 };
-
-// Сохранение кампании
-function saveCampaign() {
-    const campaigns = JSON.parse(localStorage.getItem('campaigns') || '[]');
-    const index = campaigns.findIndex(c => c.id === campaignId);
-    
-    if (currentScene) {
-        currentScene.title = document.getElementById('sceneTitle').value;
-        currentScene.content = quill.root.innerHTML;
-    }
-    
-    campaigns[index] = currentCampaign;
-    localStorage.setItem('campaigns', JSON.stringify(campaigns));
-}
 
 // Кнопка сохранения
 document.getElementById('saveBtn').onclick = () => {
     saveCampaign();
-    alert('Сохранено!');
+    alert('✅ Сохранено!');
 };
 
 // Кнопка назад
@@ -175,47 +174,5 @@ document.getElementById('backBtn').onclick = () => {
     window.location.href = 'index.html';
 };
 
-// Вставка NPC в текст
-document.getElementById('insertNpcBtn').onclick = () => {
-    if (!currentCampaign.entities.npcs.length) {
-        alert('Сначала создайте NPC');
-        return;
-    }
-    
-    const npcNames = currentCampaign.entities.npcs.map(n => n.name);
-    const selected = prompt('Выберите NPC:\n' + npcNames.join('\n'));
-    
-    if (selected) {
-        const range = quill.getSelection();
-        if (range) {
-            quill.insertText(range.index, `[NPC: ${selected}]`);
-        }
-    }
-};
-
-// Вставка локации в текст
-document.getElementById('insertLocationBtn').onclick = () => {
-    if (!currentCampaign.entities.locations.length) {
-        alert('Сначала создайте локацию');
-        return;
-    }
-    
-    const locNames = currentCampaign.entities.locations.map(l => l.name);
-    const selected = prompt('Выберите локацию:\n' + locNames.join('\n'));
-    
-    if (selected) {
-        const range = quill.getSelection();
-        if (range) {
-            quill.insertText(range.index, `[Локация: ${selected}]`);
-        }
-    }
-};
-
-// Предпросмотр
-document.getElementById('previewBtn').onclick = () => {
-    saveCampaign();
-    window.open(`reader.html?id=${campaignId}`, '_blank');
-};
-
-// Загрузка при старте
+// Загружаем кампанию при старте
 loadCampaign();

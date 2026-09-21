@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор кампании</title>
+    <link rel="stylesheet" href="css/editor.css">
+    <!-- Подключаем Quill.js для текстового редактора -->
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+    <div class="editor-container">
+        <!-- Левая панель: структура кампании -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2 id="campaignTitle">Название кампании</h2>
+                <button id="backBtn" class="btn-secondary">← Назад</button>
+            </div>
+            
+            <div class="structure">
+                <h3>Структура</h3>
+                <button id="addChapterBtn" class="btn-small">+ Глава</button>
+                <ul id="chapterList" class="chapter-list">
+                    <!-- Главы будут добавляться сюда -->
+                </ul>
+            </div>
+            
+            <div class="entities">
+                <h3>Сущности</h3>
+                <button id="addNpcBtn" class="btn-small">+ NPC</button>
+                <button id="addLocationBtn" class="btn-small">+ Локация</button>
+                <ul id="entityList" class="entity-list">
+                    <!-- Сущности будут добавляться сюда -->
+                </ul>
+            </div>
+        </aside>
+        
+        <!-- Центральная панель: редактор -->
+        <main class="editor-main">
+            <div class="editor-header">
+                <input type="text" id="sceneTitle" placeholder="Название сцены" class="scene-title-input">
+                <button id="saveBtn" class="btn-primary">💾 Сохранить</button>
+            </div>
+            
+            <!-- Quill.js редактор -->
+            <div id="editor" class="quill-editor"></div>
+        </main>
+        
+        <!-- Правая панель: инструменты -->
+        <aside class="tools-panel">
+            <h3>Инструменты</h3>
+            <button id="insertNpcBtn" class="btn-tool">📋 Вставить NPC</button>
+            <button id="insertLocationBtn" class="btn-tool">🗺️ Вставить локацию</button>
+            <button id="insertItemBtn" class="btn-tool">⚔️ Вставить предмет</button>
+            <button id="previewBtn" class="btn-tool">👁️ Предпросмотр</button>
+        </aside>
+    </div>
+    
+    <!-- Подключаем Quill.js -->
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <script src="js/editor.js"></script>
+</body>
+</html>

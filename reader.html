@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чтение кампании</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reader.css">
+    <!-- Подключаем красивые шрифты для книги -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="reader-container">
+        <!-- Боковая панель (Оглавление) -->
+        <nav class="reader-sidebar">
+            <button id="backBtn" class="btn-secondary">← К редактору</button>
+            <h2 id="bookTitle">Название книги</h2>
+            
+            <h3>📖 Оглавление</h3>
+            <ul id="tocList" class="toc-list"></ul>
+            
+            <h3>👤 Персонажи (NPC)</h3>
+            <ul id="npcList" class="entity-list"></ul>
+            
+            <h3>🗺️ Локации</h3>
+            <ul id="locList" class="entity-list"></ul>
+        </nav>
+        
+        <!-- Основной текст -->
+        <main class="reader-main">
+            <div id="contentArea" class="book-content">
+                <p class="placeholder">Выберите главу из оглавления слева, чтобы начать чтение</p>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/reader.js"></script>
+</body>
+</html>

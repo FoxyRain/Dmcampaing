@@ -33,7 +33,9 @@ function createNewCampaign() {
 
 // Открытие кампании (пока просто заглушка)
 function openCampaign(index) {
-    alert('Редактор кампании будет здесь');
+    const campaigns = JSON.parse(localStorage.getItem('campaigns') || '[]');
+    const campaign = campaigns[index];
+    window.location.href = `editor.html?id=${campaign.id}`;
 }
 
 // Инициализация

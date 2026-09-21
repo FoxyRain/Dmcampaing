@@ -1,3 +1,6 @@
+/* ===== БАЗОВЫЕ СТИЛИ ===== */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Roboto:wght@400;500&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,94 +8,184 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e2c3c 100%);
     min-height: 100vh;
     padding: 20px;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-}
-
-h1 {
     color: #333;
-    margin-bottom: 20px;
-    font-size: 2em;
 }
 
+/* ===== КОНТЕЙНЕР ===== */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 
+                0 0 0 1px rgba(255,255,255,0.1) inset;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,215,0,0.3);
+}
+
+/* ===== ЗАГОЛОВКИ ===== */
+h1 {
+    font-family: 'Cinzel', serif;
+    color: #2c3e50;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    border-bottom: 3px solid #d4af37;
+    padding-bottom: 15px;
+    background: linear-gradient(135deg, #ffd700 0%, #d4af37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-family: 'Cinzel', serif;
+    color: #34495e;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-family: 'Cinzel', serif;
+    color: #2c3e50;
+    font-size: 1.2em;
+    margin: 20px 0 10px 0;
+}
+
+/* ===== КНОПКИ ===== */
 .btn-primary {
-    background: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
+    padding: 15px 30px;
+    border-radius: 12px;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 10px 5px;
 }
 
 .btn-primary:hover {
-    background: #5568d3;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
 }
 
+.btn-secondary {
+    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.btn-small {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-small:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+}
+
+/* ===== СПИСКИ КАМПАНИЙ ===== */
 .campaign-list {
     list-style: none;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .campaign-item {
-    background: #f8f9fa;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    border-left: 4px solid #667eea;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border-left: 5px solid #d4af37;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #2c3e50;
 }
 
 .campaign-item:hover {
-    transform: translateX(5px);
+    transform: translateX(10px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border-left-width: 8px;
 }
-/* Стили редактора */
+
+/* ===== РЕДАКТОР ===== */
 .editor-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    border-radius: 12px;
 }
 
 .editor-header h1 {
-    font-size: 1.5em;
-    color: #333;
     margin: 0;
+    font-size: 1.8em;
+    border: none;
+    background: none;
+    -webkit-text-fill-color: #2c3e50;
 }
 
 .editor-layout {
     display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 20px;
+    grid-template-columns: 280px 1fr;
+    gap: 25px;
 }
 
 .sidebar {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
     height: fit-content;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .sidebar h3 {
-    font-size: 0.9em;
-    color: #666;
-    margin: 15px 0 8px 0;
+    color: #d4af37;
+    font-size: 0.95em;
+    margin: 20px 0 10px 0;
     text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #d4af37;
+    padding-bottom: 5px;
 }
 
 .sidebar h3:first-child {
@@ -101,78 +194,80 @@ h1 {
 
 .list {
     list-style: none;
-    margin-bottom: 15px;
 }
 
 .list li {
-    padding: 8px 12px;
-    background: white;
-    border-radius: 4px;
-    margin-bottom: 5px;
+    padding: 10px 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    margin-bottom: 8px;
     cursor: pointer;
-    font-size: 0.9em;
-    border-left: 3px solid #667eea;
-    transition: all 0.2s;
+    font-size: 0.95em;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
 }
 
 .list li:hover {
-    background: #e9ecef;
-    transform: translateX(3px);
+    background: rgba(255,255,255,0.2);
+    transform: translateX(5px);
+    border-left-color: #d4af37;
 }
 
 .list li.active {
-    background: #667eea;
-    color: white;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-left-color: #ffd700;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
 }
 
 .editor-main {
     background: white;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
 .scene-input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1.2em;
-    margin-bottom: 15px;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    font-family: 'Cinzel', serif;
+    transition: border-color 0.3s;
 }
 
-#editor {
-    min-height: 400px;
-    background: white;
+.scene-input:focus {
+    outline: none;
+    border-color: #667eea;
 }
 
+/* Quill Editor Styling */
 .ql-toolbar {
-    border-radius: 6px 6px 0 0;
+    border-radius: 10px 10px 0 0 !important;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+    border: 1px solid #ddd !important;
+    border-bottom: none !important;
 }
 
 .ql-container {
-    border-radius: 0 0 6px 6px;
-    min-height: 350px;
-    font-size: 16px;
+    border-radius: 0 0 10px 10px !important;
+    border: 1px solid #ddd !important;
+    min-height: 400px !important;
+    font-family: 'Crimson Text', serif !important;
+    font-size: 17px !important;
 }
 
-.btn-small {
-    background: #667eea;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    width: 100%;
-    margin-bottom: 8px;
-}
-
-.btn-small:hover {
-    background: #5568d3;
-}
-
-/* Адаптивность для мобильных */
+/* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
     .editor-layout {
         grid-template-columns: 1fr;
     }
@@ -185,7 +280,31 @@ h1 {
         order: 1;
     }
     
-    .editor-header h1 {
-        font-size: 1.2em;
+    .editor-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        margin: 5px 0;
     }
 }
+
+/* ===== АНИМАЦИИ ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+    animation: fadeIn 0.6s ease;
+}
+
+.campaign-item {
+    animation: fadeIn 0.5s ease backwards;
+}
+
+.campaign-item:nth-child(1) { animation-delay: 0.1s; }
+.campaign-item:nth-child(2) { animation-delay: 0.2s; }
+.campaign-item:nth-child(3) { animation-delay: 0.3s; }

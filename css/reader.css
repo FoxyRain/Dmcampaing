@@ -1,0 +1,121 @@
+.reader-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    background: #2c3e50;
+}
+
+/* Боковая панель */
+.reader-sidebar {
+    width: 280px;
+    background: #1a252f;
+    color: #ecf0f1;
+    padding: 20px;
+    overflow-y: auto;
+    flex-shrink: 0;
+    border-right: 1px solid #34495e;
+}
+
+.reader-sidebar h2 {
+    font-family: 'Lora', serif;
+    border-bottom: 1px solid #7f8c8d;
+    padding-bottom: 10px;
+    margin-top: 15px;
+}
+
+.reader-sidebar h3 {
+    font-size: 0.85em;
+    text-transform: uppercase;
+    color: #bdc3c7;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.toc-list, .entity-list {
+    list-style: none;
+    padding: 0;
+}
+
+.toc-list li, .entity-list li {
+    padding: 8px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    font-size: 0.95em;
+    transition: background 0.2s;
+}
+
+.toc-list li:hover, .entity-list li:hover {
+    background: #34495e;
+}
+
+.toc-list li.active {
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+/* Основная область чтения */
+.reader-main {
+    flex: 1;
+    overflow-y: auto;
+    background: #fdfbf7; /* Цвет старой бумаги */
+    padding: 40px;
+}
+
+.book-content {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Lora', serif; /* Шрифт как в книгах */
+    font-size: 18px;
+    line-height: 1.8;
+    color: #2c3e50;
+}
+
+.book-content h1, .book-content h2, .book-content h3 {
+    font-family: 'Lora', serif;
+    color: #8e44ad; /* Фиолетовый акцент */
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.book-content p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.book-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.placeholder {
+    text-align: center;
+    color: #95a5a6;
+    font-style: italic;
+    margin-top: 50px;
+}
+
+/* Адаптивность для телефонов */
+@media (max-width: 768px) {
+    .reader-container {
+        flex-direction: column;
+    }
+    .reader-sidebar {
+        width: 100%;
+        height: auto;
+        max-height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid #34495e;
+    }
+    .reader-main {
+        padding: 20px;
+    }
+    .book-content {
+        font-size: 16px;
+        text-align: left; /* На телефонах justify читается хуже */
+    }
+}
